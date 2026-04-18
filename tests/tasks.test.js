@@ -11,7 +11,7 @@ beforeAll(async () => {
     .send({
       name: "Task User",
       email: "task@example.com",
-      password: "123456"
+      password: "123456",
     });
 
   // Login
@@ -19,17 +19,15 @@ beforeAll(async () => {
     .post("/api/auth/login")
     .send({
       email: "task@example.com",
-      password: "123456"
+      password: "123456",
     });
 
   token = res.body.token;
 });
 
 describe("Task Routes", () => {
-
   it("should not allow access without token", async () => {
-    const res = await request(app)
-      .get("/api/tasks");
+    const res = await request(app).get("/api/tasks");
 
     expect(res.statusCode).toBe(401);
   });
@@ -40,7 +38,7 @@ describe("Task Routes", () => {
       .set("Authorization", `Bearer ${token}`)
       .send({
         title: "Test Task",
-        description: "Testing"
+        description: "Testing",
       });
 
     expect(res.statusCode).toBe(201);
@@ -57,5 +55,4 @@ describe("Task Routes", () => {
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
   });
-
 });
